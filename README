@@ -1,18 +1,11 @@
-# GTFS to MySQL
+GTFS to MySQL
 The easiest node.js script to import GTFS data into MySQL
 
-#### Setup
-Download all dependencies
-```console
+1. Download all dependencies
 npm install
-```
 
-Then use the create_db.sql to create/replace the database
-```console
+2. Use create_db.sql to create/replace the database
 cat create_db.sql | mysql -u -p root
-```
 
-Last step is to run the node.js script, all you have to do is
-```console
+3. Run the node.js script to import
 npm run import
-```
