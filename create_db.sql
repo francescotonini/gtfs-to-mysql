@@ -3,13 +3,13 @@
 Script contributed by Michael Perkins, refined by Francesco Tonini
 
 example usage:
-cat load.sql | mysql -u -p root
+cat create_db.sql | mysql -u -p root
 
 */
 
 CREATE DATABASE IF NOT EXISTS gtfs;
 
-USE gtfs
+USE gtfs;
 
 DROP TABLE IF EXISTS agency;
 
@@ -19,7 +19,7 @@ CREATE TABLE `agency` (
     agency_url VARCHAR(255),
     agency_timezone VARCHAR(50),
     agency_lang VARCHAR(2),
-    agency_phone VARCHAR(10),
+    agency_phone VARCHAR(15),
     agency_fare_url VARCHAR(255),
     agency_email VARCHAR(255)
 );
@@ -27,7 +27,7 @@ CREATE TABLE `agency` (
 DROP TABLE IF EXISTS calendar;
 
 CREATE TABLE `calendar` (
-    service_id INT(11),
+    service_id VARCHAR(25),
 	monday TINYINT(1),
 	tuesday TINYINT(1),
 	wednesday TINYINT(1),
@@ -43,7 +43,7 @@ CREATE TABLE `calendar` (
 DROP TABLE IF EXISTS calendar_dates;
 
 CREATE TABLE `calendar_dates` (
-    service_id INT(11),
+    service_id VARCHAR(25),
     `date` VARCHAR(8),
     date_timestamp INT(11),
     exception_type INT(2),
@@ -71,7 +71,7 @@ CREATE TABLE `routes` (
 DROP TABLE IF EXISTS stop_times;
 
 CREATE TABLE `stop_times` (
-    trip_id INT(11),
+    trip_id VARCHAR(25),
 	arrival_time VARCHAR(8),
 	departure_time VARCHAR(8),
 	stop_id INT(11),
@@ -119,10 +119,19 @@ CREATE TABLE `trips` (
 	KEY `service_id` (service_id),
     route_id INT(11),
 	KEY `direction_id` (direction_id),
-	service_id INT(11),
-	trip_id INT(11) PRIMARY KEY,
+	service_id VARCHAR(25),
+	trip_id VARCHAR(25) PRIMARY KEY,
 	trip_headsign VARCHAR(255),
 	trip_short_name VARCHAR(255),
 	KEY `block_id` (block_id),
 	KEY `shape_id` (shape_id)
+);
+
+DROP TABLE IF EXISTS transfers;
+
+CREATE TABLE `transfers` (
+	from_stop_id INT(11),
+	to_stop_id INT(11),
+	transfer_type TINYINT(1),
+	min_transfer_time INT(11)
 );

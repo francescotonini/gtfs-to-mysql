@@ -46,6 +46,11 @@ function getFile(filename, cb) {
 function parse(data, cb) {
 	if (!data) return cb(new Error('data is empty or undefined'));
 
+	// Remove last empty line
+	if (!data.csv[data.csv.length -1]) {
+		data.csv.splice(-1, 1);
+	}
+
 	var header = data.csv.splice(0, 1);
 	var rows = data.csv;
 
@@ -60,9 +65,9 @@ function doInsert(data, cb) {
 
 	async.eachSeries(data.rows, function(row, cb) {
 
-		row = row.split(',');
+		row = addslashes(row).split(',');
 		var query = `INSERT INTO ${data.table} (${data.header}) VALUES ('${row.join("','")}');`
-		
+		console.log(query);
 		conn.query(query, function(err) {
 			if (err) return cb(err);
 
@@ -89,6 +94,17 @@ function main(item, cb) {
 
 		cb();
 	});
+}
+
+function addslashes(string) {
+    return string.replace(/\\/g, '\\\\').
+        replace(/\u0008/g, '\\b').
+        replace(/\t/g, '\\t').
+        replace(/\n/g, '\\n').
+        replace(/\f/g, '\\f').
+        replace(/\r/g, '\\r').
+        replace(/'/g, '\\\'').
+        replace(/"/g, '\\"');
 }
 
 async.eachSeries(data, main, function(err) {

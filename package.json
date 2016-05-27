@@ -1,17 +1,17 @@
 {
   "name": "gtfs-to-mysql",
   "version": "1.0.0",
-  "description": "",
+  "description": "An easy node.js script to import GTFS data into MySQL",
   "main": "index.js",
   "dependencies": {
-    "async": "^2.0.0-rc.5",
-    "csv": "^1.1.0",
-    "csv-parse": "^1.1.0",
-    "mysql": "^2.10.2"
+    "async": "2.0.0-rc.5",
+    "mysql": "2.10.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "import": "node index.js"
   },
   "author": "Francesco Tonini <francescoantoniotonini@gmail.com>",
   "license": "ISC"
